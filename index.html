@@ -18,6 +18,12 @@
             margin-bottom: 10px;
             font-size: 16px;
         }
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -45,8 +51,7 @@
 <body>
     <h1>Printer Interface</h1>
     <textarea id="printContent" placeholder="Enter the text you want to print..."></textarea>
-    <input id="host"></textarea>
-
+    <input id="host" placeholder="Enter the server host (e.g., http://localhost:3000)" />
     <button onclick="sendPrintRequest()">Print</button>
     <div id="log" class="log"></div>
 
@@ -63,22 +68,24 @@
         async function sendPrintRequest() {
             const printContent = document.getElementById('printContent').value.trim();
             const host = document.getElementById('host').value.trim();
+
             if (!printContent) {
                 logMessage('Error: No text to print.', 'error');
                 return;
             }
 
+            if (!host) {
+                logMessage('Error: No host provided.', 'error');
+                return;
+            }
+
             try {
                 logMessage('Sending print request...', 'info');
-                fetch(host+'/print', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data: 'Your print data here' }),
-})
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error('Error:', error));
-
+                const response = await fetch(`${host}/print`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: printContent }),
+                });
 
                 if (response.ok) {
                     logMessage('Print job sent successfully!', 'success');

@@ -10,15 +10,22 @@ const PORT = process.env.PORT || 3000; // Use dynamic port for deployment
 app.use(bodyParser.json());
 app.use(cors());
 
-//   Endpoint for sending print jobs
+// Endpoint for sending print jobs
 app.post('/print', (req, res) => {
-    const printData = req.body.data;
+    //const printData = req.body.data;
+    const printData = '\x1B\x40' + // Initialize
+    'Hello, World!\x0A' + // Print "Hello, World!" and new line
+    '\x1B\x64\x02' + // Feed paper by 2 lines
+    '\x1D\x56\x41';  // Cut paper
 
     if (!printData) {
         return res.status(400).send('Error: No print data provided.');
     }
 
     const client = new net.Socket();
+
+    // Track if a response has been sent
+    let responseSent = false;
 
     client.connect(9100, '192.168.20.5', () => {
         console.log(`Connected to printer`);
@@ -30,12 +37,18 @@ app.post('/print', (req, res) => {
 
     client.on('error', (error) => {
         console.error(`Error connecting to printer: ${error.message}`);
-        res.status(500).send(`Error connecting to printer: ${error.message}`);
+        if (!responseSent) {
+            responseSent = true;
+            res.status(500).send(`Error connecting to printer: ${error.message}`);
+        }
     });
 
     client.on('close', () => {
         console.log('Connection to printer closed');
-        res.send('Print job sent successfully!');
+        if (!responseSent) {
+            responseSent = true;
+            res.send('Print job sent successfully!');
+        }
     });
 });
 
