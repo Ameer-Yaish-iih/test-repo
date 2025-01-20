@@ -41,9 +41,10 @@ app.post('/print', (req, res) => {
     });
 });
 
-// Start the server
+// Start the serverconst PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || `localhost:${PORT}`;
+
 app.listen(PORT, () => {
-    // Log the domain dynamically if available
-    const domain = process.env.HOST || `http://localhost:${PORT}`;
-    console.log(`Server is publicly accessible at ${domain}`);
+    console.log(`Server is running at http://${HOST}`);
 });
+
