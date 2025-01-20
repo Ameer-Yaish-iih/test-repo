@@ -70,7 +70,7 @@
 
             try {
                 logMessage('Sending print request...', 'info');
-                fetch(host+'.netlify/functions/print', {
+                fetch(host+'/print', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ data: 'Your print data here' }),
