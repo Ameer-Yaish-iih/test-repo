@@ -67,7 +67,7 @@
 
             try {
                 logMessage('Sending print request...', 'info');
-                const response = await fetch('http://localhost:3000/print', {
+                const response = await fetch('https://bespoke-gumdrop-405954.netlify.app/print', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
