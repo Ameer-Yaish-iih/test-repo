@@ -6,7 +6,10 @@ exports.handler = async (event, context) => {
         const body = JSON.parse(event.body);
         const printData = body.data;
         console.log(printData);
-
+        return {
+            statusCode: 500,
+            body: printData,
+        };
         if (!printData) {
             return {
                 statusCode: 400,
