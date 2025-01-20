@@ -5,6 +5,7 @@ exports.handler = async (event, context) => {
         // Parse the POST data
         const body = JSON.parse(event.body);
         const printData = body.data;
+        console.log(printData);
 
         if (!printData) {
             return {
