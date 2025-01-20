@@ -70,15 +70,6 @@
 
             try {
                 logMessage('Sending print request...', 'info');
-<<<<<<< HEAD
-                const response = await fetch(host+'/print', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ data: printContent }),
-                });
-=======
                 fetch(host+'.netlify/functions/print', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -88,7 +79,6 @@
     .then((data) => console.log(data))
     .catch((error) => console.error('Error:', error));
 
->>>>>>> e86ba4ab43d6a8779db66b783ccdd1bb836d5b36
 
                 if (response.ok) {
                     logMessage('Print job sent successfully!', 'success');
