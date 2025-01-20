@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000; // Use dynamic port for deployment
 app.use(bodyParser.json());
 app.use(cors());
 
-// API Endpoint for sending print jobs
+//   Endpoint for sending print jobs
 app.post('/print', (req, res) => {
     const printData = req.body.data;
 
