@@ -43,5 +43,7 @@ app.post('/print', (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    // Log the domain dynamically if available
+    const domain = process.env.HOST || `http://localhost:${PORT}`;
+    console.log(`Server is publicly accessible at ${domain}`);
 });
