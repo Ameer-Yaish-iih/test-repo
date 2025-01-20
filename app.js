@@ -45,6 +45,6 @@ app.post('/print', (req, res) => {
 const HOST = process.env.HOST || `localhost:${PORT}`;
 
 app.listen(PORT, () => {
-    console.log(`Server is running at http://${HOST}`);
+    console.log( ` ameer Server is running at http://${HOST}`);
 });
 
