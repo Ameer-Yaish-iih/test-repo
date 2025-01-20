@@ -1,15 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const net = require('net');
+const cors = require('cors');
 
 const app = express();
-const PORT = 3000; // Port for the server
-const printerIP = '192.168.20.5'; // Printer's IP address
-const printerPort = 9100; // Printer's port (default: 9100)
+const PORT = process.env.PORT || 3000; // Use dynamic port for deployment
 
 // Middleware
 app.use(bodyParser.json());
-const cors = require('cors');
 app.use(cors());
 
 // API Endpoint for sending print jobs
@@ -22,11 +20,11 @@ app.post('/print', (req, res) => {
 
     const client = new net.Socket();
 
-    client.connect(printerPort, printerIP, () => {
-        console.log(`Connected to printer at ${printerIP}:${printerPort}`);
+    client.connect(9100, '192.168.20.5', () => {
+        console.log(`Connected to printer`);
         client.write(printData, () => {
             console.log('Print data sent successfully');
-            client.end(); // Close connection
+            client.end();
         });
     });
 
@@ -41,10 +39,14 @@ app.post('/print', (req, res) => {
     });
 });
 
-// Start the serverconst PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || `localhost:${PORT}`;
-
-app.listen(PORT, () => {
-    console.log( ` ameer Server is running at http://${HOST}`);
+// Example route to log hostname dynamically
+app.get('/', (req, res) => {
+    const hostname = req.get('host'); // Get the hostname from the request
+    console.log(`Request received on hostname: ${hostname}`);
+    res.send(`Server is running on hostname: ${hostname}`);
 });
 
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
