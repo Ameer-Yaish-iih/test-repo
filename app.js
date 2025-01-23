@@ -27,7 +27,7 @@ app.post('/print', (req, res) => {
     // Track if a response has been sent
     let responseSent = false;
 
-    client.connect(9100, '192.168.1.87', () => {
+    client.connect(9100, '46.32.195.1', () => {
         console.log(`Connected to printer`);
         client.write(printData, () => {
             console.log('Print data sent successfully');

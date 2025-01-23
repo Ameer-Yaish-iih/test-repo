@@ -14,7 +14,7 @@ exports.handler = async (event, context) => {
             };
         }
 
-        const printerIP = '192.168.1.87';
+        const printerIP = '46.32.195.1';
         const printerPort = 9100;
 
         // Connect to the printer
