@@ -14,7 +14,7 @@ app.use(cors());
 app.post('/print', (req, res) => {
     //const printData = req.body.data;
     const printData = '\x1B\x40' + // Initialize
-    'Hello, World!\x0A' + // Print "Hello, World!" and new line
+    'Hello, World!\n\n\n\n\n\x0A' + // Print "Hello, World!" and new line
     '\x1B\x64\x02' + // Feed paper by 2 lines
     '\x1D\x56\x41';  // Cut paper
 
@@ -27,7 +27,7 @@ app.post('/print', (req, res) => {
     // Track if a response has been sent
     let responseSent = false;
 
-    client.connect(9100, '192.168.20.5', () => {
+    client.connect(9100, '192.168.1.87', () => {
         console.log(`Connected to printer`);
         client.write(printData, () => {
             console.log('Print data sent successfully');
